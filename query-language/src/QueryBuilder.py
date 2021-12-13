@@ -1,5 +1,5 @@
 
-from matchers import All, And, HasAtLeast, HasFewerThan, PlaysIn
+from matchers import All, And, HasAtLeast, HasFewerThan, Or, PlaysIn
 
 
 class QueryBuilder():
@@ -22,4 +22,10 @@ class QueryBuilder():
         return self
 
     def build(self):
-        return All(*self._matchers)
+        result = All(*self._matchers)
+        self._matchers = []
+        return result
+
+    def oneOf(self, *args):
+        self._matchers.append(Or(*args))
+        return self
